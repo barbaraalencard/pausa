@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pausa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="blob pink"></div>
+    <div class="blob blue"></div>
+    <div class="blob yellow"></div>
+
+    <main id="app"></main>
+
+    <template id="card-template">
+        <article class="card" tabindex="0">
+            <div class="card-top">
+                <div class="icon"></div>
+            </div>
+            <div class="card-body">
+                <h2></h2>
+                <p></p>
+            </div>
+            <div class="card-arrow">→</div>
+        </article>
+    </template>
+
+    <template id="option-template">
+        <button class="option" type="button">
+            <div class="option-left">
+                <div class="option-icon"></div>
+                <span></span>
+            </div>
+            <div class="option-arrow">→</div>
+        </button>
+    </template>
+
+    <template id="reflection-template">
+        <section class="reflection">
+            <div class="reflection-icon">🌱</div>
+            <h2></h2>
+            <p></p>
+            <div class="suggestion"></div>
+            <button id="restart" type="button">Fazer outra reflexão</button>
+        </section>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
