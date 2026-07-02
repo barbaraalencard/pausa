@@ -412,6 +412,44 @@ footer {
     line-height: 1.7;
 }
 
+.answer-summary {
+    max-width: 54ch;
+    margin: 0 auto 18px;
+    padding: 16px 18px;
+    border: 1px solid rgba(42, 46, 67, .08);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .56);
+    color: #42475f;
+    text-align: left;
+}
+
+.answer-summary strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: .82rem;
+    color: #6f748a;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.answer-summary ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.answer-summary li {
+    padding: 8px 11px;
+    border-radius: 999px;
+    background: #fff;
+    font-size: .94rem;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(35, 45, 85, .06);
+}
+
 .suggestion {
     max-width: 54ch;
     margin: 0 auto 28px;

@@ -200,6 +200,94 @@ const situations = [
         }
     },
     {
+        id: "reply",
+        color: "green",
+        icon: "↩️",
+        title: "Quero responder uma mensagem",
+        description: "Vamos pensar no tom antes de responder.",
+        questions: [
+            {
+                text: "Essa mensagem veio de que tipo de relação?",
+                options: [
+                    { label: "Alguém que gosto ou estou me envolvendo", value: "romantic" },
+                    { label: "Amizade ou família", value: "close" },
+                    { label: "Trabalho, estudo ou compromisso", value: "practical" },
+                    { label: "Alguém me cobrando ou pressionando", value: "pressure" }
+                ]
+            },
+            {
+                text: "O que mais te pegou nessa mensagem?",
+                options: [
+                    { label: "O tom da pessoa", value: "tone" },
+                    { label: "A demora ou distância", value: "distance" },
+                    { label: "O medo de decepcionar", value: "disappoint" },
+                    { label: "A vontade de explicar tudo", value: "overexplain" },
+                    { label: "O assunto em si", value: "subject" }
+                ]
+            },
+            {
+                text: "Essa resposta precisa sair agora ou você sentiu que precisava responder agora?",
+                options: [
+                    { label: "Precisa de resposta prática agora", value: "now" },
+                    { label: "Pode esperar um pouco", value: "wait" },
+                    { label: "Eu me senti pressionada", value: "felt-pressure" },
+                    { label: "Não sei ainda", value: "unsure" }
+                ]
+            },
+            {
+                text: "Que tipo de resposta cuidaria melhor de você?",
+                options: [
+                    { label: "Curta e clara", value: "short" },
+                    { label: "Carinhosa, mas sem me justificar demais", value: "warm-boundary" },
+                    { label: "Pedir tempo para pensar", value: "ask-time" },
+                    { label: "Colocar um limite", value: "boundary" },
+                    { label: "Não responder agora", value: "no-reply-now" }
+                ]
+            }
+        ],
+        reflection: ({ has }) => {
+            if (has("romantic") && (has("distance") || has("overexplain"))) {
+                return {
+                    text: "Essa mensagem parece tocar numa parte sensível: vontade de se aproximar, medo de parecer demais ou tentativa de entender o lugar que você ocupa para a outra pessoa. Antes de responder, vale separar carinho de ansiedade.",
+                    suggestion: "Você pode responder com afeto e limite: “Quero te responder com calma, então vou pensar um pouco antes.”"
+                };
+            }
+
+            if (has("pressure") || has("felt-pressure") || has("boundary")) {
+                return {
+                    text: "A urgência talvez não esteja só na mensagem, mas na sensação de que você precisa dar conta da reação da outra pessoa. Você pode ser clara sem se explicar inteira.",
+                    suggestion: "Você pode responder: “Entendi. Agora não consigo resolver isso, mas te retorno quando puder.”"
+                };
+            }
+
+            if (has("practical") && has("now")) {
+                return {
+                    text: "Aqui parece existir uma resposta prática a ser dada. Não precisa virar uma conversa emocional se o que a situação pede é clareza e objetividade.",
+                    suggestion: "Você pode responder em uma frase direta: “Confirmo sim” ou “Não consigo nesse horário.”"
+                };
+            }
+
+            if (has("close") && has("disappoint")) {
+                return {
+                    text: "Com pessoas próximas, às vezes a vontade de cuidar vira medo de frustrar. Responder com carinho não significa aceitar tudo, nem explicar cada detalhe da sua vida.",
+                    suggestion: "Você pode responder: “Eu entendo você, mas agora preciso fazer de outro jeito.”"
+                };
+            }
+
+            if (has("wait") || has("ask-time") || has("no-reply-now")) {
+                return {
+                    text: "Você percebeu que uma resposta imediata talvez não seja a mais cuidadosa. Pausar também é uma forma de responder melhor, principalmente quando o tom ou o assunto mexeu com você.",
+                    suggestion: "Você pode deixar para responder depois ou dizer: “Vou pensar e te respondo com calma.”"
+                };
+            }
+
+            return {
+                text: "Parece que você está tentando encontrar um tom que seja honesto sem se atropelar. Uma boa resposta não precisa carregar tudo: pode ser simples, clara e suficiente.",
+                suggestion: "Você pode escrever uma versão curta primeiro e cortar tudo que for só justificativa."
+            };
+        }
+    },
+    {
         id: "tell",
         color: "pink",
         icon: "❤️",
@@ -462,10 +550,22 @@ function renderReflection() {
 
     reflection.querySelector("h2").textContent = "O que eu percebi";
     reflection.querySelector("p").textContent = result.text;
+    fillAnswerSummary(reflection);
     reflection.querySelector(".suggestion").textContent = result.suggestion;
     screen.appendChild(reflection);
 
     document.querySelector("#restart").addEventListener("click", goHome);
+}
+
+function fillAnswerSummary(reflection) {
+    const summary = reflection.querySelector(".answer-summary");
+    const list = summary.querySelector("ul");
+
+    state.answers.forEach((answer) => {
+        const item = document.createElement("li");
+        item.textContent = answer.label;
+        list.appendChild(item);
+    });
 }
 
 function getCurrentSituation() {
